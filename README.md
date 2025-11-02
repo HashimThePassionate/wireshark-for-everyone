@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./images/wireshark.svg" alt="Wireshark Logo" width="600" />
+  <img src="./images/wireshark.svg" alt="Wireshark Logo"  />
 </h1>
 
 <p align="center">
