@@ -71,3 +71,54 @@ Packet analysis tools range in appearance and functionality, as follows:
 * They deliver a rich **graphical UI** with advanced **artificial intelligence (AI)-based expert systems** that guide the analyst through a more targeted evaluation.
 
 ---
+
+# 🖥️ **Evaluating Devices That Use Packet Analysis**
+
+Packet analysis and traffic sniffing are utilized by many devices on the network, including routers, switches, and firewall appliances. As data flows across the network, these devices gather and interpret the packet's raw bits. They examine the field values in each packet to decide on what action should be taken.
+
+Devices examine network traffic in the following manner:
+
+* A **router** captures the traffic and examines the **IP header** to determine where to send the traffic, as part of the routing process.
+* An **IDS (Intrusion Detection System)** examines the traffic and alerts the network administrator if there is any unusual or suspicious behavior.
+* A **firewall** monitors all traffic and will **drop any packets** that are not in line with the **Access Control List (ACL)**.
+
+For example, when data passes through a firewall, the device examines the traffic and determines whether to allow or deny the packets according to the ACL.
+
+## 📜 Using an ACL
+
+When using a firewall, an **ACL (Access Control List)** governs the type of traffic that is allowed on the network.
+
+For example, an ACL has the following entries:
+
+* Allow **outbound SYN** packets. The **destination port is 80**.
+* Allow **inbound SYN-ACK** packets. The **source port is 80**.
+
+To decide whether to allow or deny a packet, the firewall must check each header as it passes through the device. It will determine variables such as IP addresses, **Transmission Control Protocol (TCP) flags**, and port numbers that are in use.
+
+If the packet does not meet the ACL entry, the firewall will drop the packet.
+
+<div align="center">
+  <img src="./images/01.jpg" width="700"/>
+</div>
+
+### 📊 Figure 1.1 – A firewall with an ACL
+
+
+As shown in the diagram, an inbound **SYN** packet with a **destination port of 80** is blocked because it does not match the rule.
+
+Here is a detailed breakdown of the diagram based on the provided ACL rules:
+
+1.  **Trusted Network (Internal):** The laptop on the "Trusted Internet Network" initiates a connection to a web server (Port 80) on the "Internet."
+2.  **Allowed Outbound Traffic:** The first packet is a `SYN` packet with a `Dest Port=80`. This is an **outbound** packet and **matches the first ACL rule**, so the firewall allows it to pass to the Internet.
+3.  **Allowed Inbound Traffic:** The Internet server responds with a `SYN-ACK` packet. This packet is **inbound** and has a `Source Port=80`. This **matches the second ACL rule**, so the firewall allows it to pass to the internal laptop.
+4.  **Allowed Outbound ACK:** The laptop sends a final `ACK` packet to establish the connection, which is allowed.
+5.  **Blocked Inbound Traffic (Highlighted):** The diagram shows a separate, unsolicited **inbound** `SYN` packet coming from the Internet, attempting to reach the trusted network (`Dest Port=80`).
+6.  **Why It Is Blocked:** This packet is blocked (indicated by the red "X" and flames) because it **does not match any ACL rule**. The second rule only allows *inbound* packets that are `SYN-ACK` (a reply). This packet is a `SYN` packet (a new connection attempt). Since no rule explicitly allows this unsolicited inbound `SYN` packet, the firewall drops it.
+
+
+> **It's important to note:** A packet sniffer examines traffic but **doesn't modify the contents** in any way. It simply gathers the traffic for analysis as it travels across the network.
+
+As you can see, packet sniffing and analysis have been influential for many years as elements of managing networks.
+
+
+---
